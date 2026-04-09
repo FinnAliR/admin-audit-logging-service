@@ -7,6 +7,7 @@ This project is intended to help demonstrate backend design principles such as c
 
 The main goal of this project is to provide a simple and extensible foundation for admin activity tracking, while giving hands-on experience with real-world backend development patterns.
 
+to run locally I use: .\mvnw.cmd spring-boot:run
 
 #Approve KYC curl:
 $body = @{
@@ -37,8 +38,8 @@ Invoke-RestMethod `
 
 #Update Fee
 $body = @{
-adminId = 101
-adminName = "admin.demo"
+adminId = 102
+adminName = "ops.manager"
 feeCode = "WITHDRAWAL_FEE"
 oldFee = 1.50
 newFee = 2.00
@@ -55,3 +56,13 @@ Invoke-RestMethod -Method Get -Uri "http://localhost:8080/audit-logs"
 
 If you want raw JSON:
 Invoke-RestMethod -Method Get -Uri "http://localhost:8080/audit-logs" | ConvertTo-Json -Depth 5
+
+#Test Filtering:
+By admin name:
+Invoke-RestMethod -Method Get -Uri "http://localhost:8080/audit-logs?adminName=admin.demo"
+
+By Action Type:
+Invoke-RestMethod -Method Get -Uri "http://localhost:8080/audit-logs?actionType=APPROVE_KYC"
+
+By Both:
+Invoke-RestMethod -Method Get -Uri "http://localhost:8080/audit-logs?adminName=admin.demo&actionType=APPROVE_KYC"
